@@ -32,7 +32,7 @@ function DrawerScreen() {
     return (
       <Navigator drawerContent={props => <DrawerContent {...props}/>}>
       <Screen name='Users' component={UsersScreen}/>
-      <Screen name='Orders' component={ChatBotScreen}/>
+      <Screen name='ChatBotScreen' component={ChatBotScreen}/>
     </Navigator>
     )
 }
