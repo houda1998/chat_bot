@@ -1,10 +1,10 @@
 import React from 'react'
 import { ApplicationProvider, Button, Text,Card,View } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {Linking} from "react-native";
+import {Linking,StyleSheet,Image} from "react-native";
 import * as eva from '@eva-design/eva'
 import {newsApi} from "../api.jsx"
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 function NewsScreen() {
     const [news,setnews]=useState([])
@@ -12,7 +12,7 @@ function NewsScreen() {
     useEffect( () =>  {
         setloading(true)
         const fetchData=()=>{
-          newsApi.get('/').
+          newsApi.get('/top-headlines?country=ma&q=covid&sortBy=publishedAt&apiKey=04f4ae3f5bd344c78d1d1aa5961a86cf').
           then(response=> {
           setnews(response.data.articles);
           }
@@ -33,7 +33,7 @@ function NewsScreen() {
             news.map((n)=>(
      <Card style={styles.card}
       header={
-      <View {...props}>
+      <View >
       <Text category='h6'>{n.title}</Text>
       <Text category='s1'>{n.description}</Text>
       <Image
@@ -41,7 +41,7 @@ function NewsScreen() {
       />
     </View>}
        footer={
-        <View {...props} style={[props.style, styles.footerContainer]}>
+        <View  style={ styles.footerContainer}>
         <Button
           style={styles.footerControl}
           size='small'

@@ -8,7 +8,7 @@ export const botapi = axios.create({
     baseURL: 'http://127.0.0.1:5000',
     timeout: 1000,
   });
-  export const newsapi = axios.create({
-    baseURL: 'http://newsapi.org/v2/top-headlines?country=ma&q=covid&sortBy=publishedAt&apiKey=04f4ae3f5bd344c78d1d1aa5961a86cf',
+  export const newsApi = axios.create({
+    baseURL: 'http://newsapi.org/v2',
     timeout: 1000,
   });

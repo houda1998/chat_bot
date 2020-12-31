@@ -41,7 +41,7 @@ function LogIn({navigation}) {
       secureTextEntry={secureTextEntry}
       onChangeText={nextValue => setValue(nextValue)}
     />
-    <Button  onPress={() => navigation.navigate('Dashbord')}
+    <Button  onPress={() => navigation.navigate('Statistiques')}
         title="Se connecter"> Se connecter</Button>
       </View>
       </SafeAreaView>

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { View,StyleSheet } from 'react-native'
 import * as eva from '@eva-design/eva'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { ApplicationProvider, Button, Card, Layout, Text } from '@ui-kitten/components';
 import {statApi} from "../api.jsx"
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ChatBotScreen from './ChatBotScreen.jsx';
+import NewsScreen from './NewsScreen.jsx';
+import HomeScreen from './HomeScreen.jsx';
 function StatistiqueScreen({ navigation }) {
   const [GlobalStat, setGlobalStat] = useState([]);
 
@@ -78,7 +82,18 @@ function StatistiqueScreen({ navigation }) {
          
     );
   }
-  
+  const Drawer = createDrawerNavigator();
+
+function Statistiques() {
+    return (
+        <Drawer.Navigator initialRouteName="Statistiques">
+          <Drawer.Screen name="Statstiques" component={StatistiqueScreen} />
+          <Drawer.Screen name="Chatbot" component={ChatBotScreen} />
+          <Drawer.Screen name="news" component={NewsScreen} />
+          <Drawer.Screen name="Se deconnecter" component={HomeScreen} />
+        </Drawer.Navigator>
+    )
+}
   
  
 const styles = StyleSheet.create({
@@ -93,4 +108,4 @@ const styles = StyleSheet.create({
     
   },
 });
-export default StatistiqueScreen
+export default Statistiques
