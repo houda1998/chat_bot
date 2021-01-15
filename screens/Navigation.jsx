@@ -10,6 +10,8 @@ import StatistiqueScreen from './Statistiques';
 import StatCountriesScreen from './StatCountriesScreen';
 import Dashbord from './DashbordScreen';
 import NewsScreen from './NewsScreen';
+import chartsScreen from './chartsScreen';
+import mapScreen from './mapScreen';
 const { Navigator, Screen } = createStackNavigator();
 const HomeNavigator = () => (
   <Navigator headerMode='none'>
@@ -19,8 +21,9 @@ const HomeNavigator = () => (
     <Screen name='Signup' component={Signup}/>
     <Screen name='Statistiques' component={StatistiqueScreen}/>
     <Screen name='StatCountriesScreen' component={StatCountriesScreen}/>
-    <Screen name='Dashbord' component={Dashbord}/>
     <Screen name='news' component={NewsScreen}/>
+    <Screen name='chartsScreen' component={chartsScreen}/>
+    <Screen name='mapScreen' component={mapScreen}/>
   </Navigator>
 );
 function AppNavigation() {

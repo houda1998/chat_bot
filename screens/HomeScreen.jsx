@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView,View,Image, StyleSheet  } from 'react-native';
-import { Button, Divider, TopNavigation } from '@ui-kitten/components';
+import { Button, Divider } from '@ui-kitten/components';
 
 function HomeScreen({navigation}) {
   const styles = StyleSheet.create({
@@ -15,8 +15,7 @@ function HomeScreen({navigation}) {
   });
   
     return (
-        <SafeAreaView style={{ flex: 2 }}>
-      <TopNavigation title='MyApp' alignment='center'/>
+        <SafeAreaView style={{ flex: 1 }}>
       <Divider/>
       <View style={{backgroundColor: '#353d2f',flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <View >

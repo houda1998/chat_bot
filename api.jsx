@@ -9,6 +9,10 @@ export const botapi = axios.create({
     timeout: 1000,
   });
   export const newsApi = axios.create({
-    baseURL: 'http://newsapi.org/v2',
+    baseURL: 'http://newsapi.org/v2/top-headlines?country=ma&q=covid&sortBy=publishedAt&apiKey=04f4ae3f5bd344c78d1d1aa5961a86cf',
+    timeout: 1000,
+  });
+  export const CovidApi = axios.create({
+    baseURL: 'https://corona-api.com',
     timeout: 1000,
   });

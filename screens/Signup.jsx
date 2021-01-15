@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView,View,TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView,View,TouchableWithoutFeedback, Image } from 'react-native';
 import { Button, Divider, TopNavigation,Datepicker, Layout, Text  } from '@ui-kitten/components';
 import { Icon, Input } from '@ui-kitten/components';
 
@@ -23,27 +23,38 @@ function Signup({navigation}) {
     );
 
     return (
-        <SafeAreaView style={{ flex: 2 }}>
-        <TopNavigation title='MyApp' alignment='center'/>
-        <Divider/>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={{ backgroundColor: '#353d2f',flex: 1}}>
+            <Image
+        source={require('./assets/covid_people.jpg')}
+        style={{flex: 1,
+          width: "100%",
+          height: null,
+          resizeMode: 'contain'}}
+      />
+      </View>
+           
+        <View style={{ backgroundColor: '#353d2f',flex:1, alignItems: 'center', justifyContent: 'center' }}>
         <Input
       placeholder='Pseudo'
       label='Pseudo'
       value={value}
+      style={{backgroundColor:"#034C2F"}}
+
       onChangeText={nextValue => setValue(nextValue)}
     />
      <Input
      label='Email'
       placeholder='email'
       value={value}
+      style={{backgroundColor:"#034C2F"}}
       onChangeText={nextValue => setValue(nextValue)}
     />
      <Datepicker
     style={{  alignSelf: 'stretch',}}
     label='Date de naissance'
-        date={date}
-        onSelect={nextDate => setDate(nextDate)}
+    date={date}
+    onSelect={nextDate => setDate(nextDate)}
       />
     <Input
       value={value}
@@ -53,10 +64,14 @@ function Signup({navigation}) {
       accessoryRight={renderIcon}
       captionIcon={AlertIcon}
       secureTextEntry={secureTextEntry}
+      style={{backgroundColor:"#034C2F"}}
       onChangeText={nextValue => setValue(nextValue)}
     />
-   
-    <Button  onPress={() => navigation.navigate('Login')}
+    <Button  
+     style={{marginTop:20}}
+     appearance='outline'
+     status='success'
+    onPress={() => navigation.navigate('Login')}
         title="S'inscrire'">S'inscrire</Button>
       </View>
       </SafeAreaView>

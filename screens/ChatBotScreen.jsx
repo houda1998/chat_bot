@@ -14,8 +14,9 @@ function ChatBotScreen() {
 const [Mesmessages, setMessages] = useState([]);
 useEffect( () =>  {
   console.log("t")
-  axios.get(`http://10.0.2.2:5000`)
+  axios.get(`https://ai-chatbot-server.herokuapp.com/`)
   .then(response =>{
+    console.log(response.data)
    setMessages(response.data) 
   })
   .catch((error) => {
@@ -31,7 +32,7 @@ if(Mesmessages.length>0) {
                   <ChatBot         
                  steps={[
                   {
-                    id: '0',
+                    id:'0',
                     message: Mesmessages[0].message ,
                     trigger: '1',
                   },
