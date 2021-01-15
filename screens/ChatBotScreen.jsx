@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { View,Text,SafeAreaView } from 'react-native'
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { ApplicationProvider, Spinner } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import ChatBot from 'react-native-chatbot';
 import api from "../api"
@@ -54,7 +54,16 @@ if(Mesmessages.length>0) {
     }
     else{
       return(
-  <Text>wait ...</Text>
+        <ApplicationProvider {...eva} theme={eva.dark}>
+        <SafeAreaView style={{flex: 2,paddingTop:30}}>
+        <View style={{flex: 1,
+      justifyContent: 'center',
+      alignItems:'center'}}>
+        <Text>Veuillez patienter...</Text>
+          <Spinner size="large"/>
+          </View>
+          </SafeAreaView>
+          </ApplicationProvider>
       )
     } 
       
