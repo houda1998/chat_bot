@@ -3,15 +3,27 @@ import { View,Text,SafeAreaView, Linking } from 'react-native'
 import { ApplicationProvider, Spinner } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import ChatBot, { Loading } from 'react-native-chatbot';
+import { ThemeProvider } from 'styled-components';
 import api from "../api"
 import axios from 'axios';
 
 
 const  baseURL="https://ai-chatbot-server.herokuapp.com/";
 
-
 function ChatBotScreen() {
+  const theme = {
+    background: '#fff',
+    fontFamily: 'Helvetica Neue',
+    headerBgColor: '#EF6C00',
+    headerFontColor: '#fff',
+    headerFontSize: '15px',
+    botBubbleColor: '#EF6C00',
+    botFontColor: '#fff',
+    userBubbleColor: '#EF6C00',
+    userFontColor: '#fff',
+  };
 const [Mesmessage, setMessage] = useState("");
+const [sent, setSent] = useState(false);
 const [loading,setloading]=useState(true)
 var msg="";
 var Monmessage="wait";
@@ -25,21 +37,129 @@ useEffect( () =>  {
     console.log(error);
     setloading(true)
   })
-},[Mesmessage]); 
+},[]); 
+
 
 const  ChatbotResponse= async(previewMessage) =>{
  try{
   const resp= await axios.post(baseURL+'message',{"message":previewMessage})
-     Monmessage=resp.data.message
-     setMessage(Monmessage)
+     //let Monmessage=resp.data.message
+     setMessage(resp.data.message)
      setloading(false)
-     return Monmessage
+    // return Monmessage
+    return resp
    }
  catch{err => { 
    console.log(err)
+   setloading(true)
  }}
-return Monmessage
+//return Monmessage
 }
+
+
+
+const Chat =({...props})=>{ 
+   let message=""
+   const [msg,setmsg]=useState("")
+  useEffect( () =>  {
+    ChatbotResponse(props.previousStep.message).then(
+    resp=>{
+       message=resp.data.message
+      setmsg(message)
+      console.log(msg)
+      props.triggerNextStep({trigger:"1" })
+    }
+  )
+  },[]); 
+    if(msg!=""){ 
+     return (
+      <ThemeProvider theme={theme}>
+          <ChatBot  
+          style={{height:150}}
+          recognitionEnable={true} 
+          hideSubmitButton={true}
+          submitButtonStyle={{display:"none"}}
+          footerStyle={{width:10}}
+          inputStyle={{display:"none"}}
+          steps={[
+            {
+              id:'0',
+              message: msg,
+            },
+          ]}
+              />
+              </ThemeProvider>
+     )
+  }
+  else return (
+    <View></View>
+  )
+ 
+}
+
+const getMessage= async (previewMessage)=>{
+   Monmessage= await ChatbotResponse(previewMessage);
+}
+
+if(!loading) {
+ return (
+
+                  <SafeAreaView style={{ flex: 2 ,marginTop : 100  }}>
+                  <ChatBot  
+                    headerTitle="CovidBot"
+                    steps={[
+                      {
+                        id:'0',
+                        message: Mesmessage,
+                        trigger: '1',
+                      },
+
+                      {
+                        id: '1',
+                        user: true,
+                        trigger: ({ value, steps })=>{
+                         
+                          return "3"
+                        }
+                      },
+                      {
+                        id: '2',
+                        message: Mesmessage,
+                         trigger: '1'
+                      },  
+                      {
+                        id: '3',
+                        component:<Chat style={{backgroundColor:"grey"}}/> ,
+                         waitAction:true,
+                      },  
+                    ]}
+                	/>  
+                
+                                       
+                 </SafeAreaView>
+ )
+    }
+    else{
+      return(
+        <ApplicationProvider {...eva} theme={eva.dark}>
+        <SafeAreaView style={{flex: 2,paddingTop:30}}>
+        <View style={{flex: 1,
+      justifyContent: 'center',
+      alignItems:'center'}}>
+        <Text>Veuillez patienter...</Text>
+          <Spinner size="large"/>
+          </View>
+          </SafeAreaView>
+          </ApplicationProvider>
+      )
+    } 
+      
+        
+    
+}
+
+export default ChatBotScreen
+
 
 // const  ChatbotResponse= (previewMessage) =>{
 //    axios.post(baseURL+'message',{"message":previewMessage})
@@ -69,43 +189,6 @@ return Monmessage
 //  })
 
 // }
-const getMessage= async (previewMessage)=>{
-   Monmessage= await ChatbotResponse(previewMessage);
-}
-if(!loading) {
- return (
-<ApplicationProvider {...eva} theme={eva.light}>
-                  <SafeAreaView style={{ flex: 2 ,marginTop : 100  }}>
-                  <ChatBot  
-                    recognitionEnable={true} 
-                    steps={[
-                      {
-                        id:'0',
-                        message: Mesmessage,
-                        trigger: '1',
-                      },
-                      {
-                        id: '1',
-                        user: true,
-                        trigger: "2",                   
-                      
-                      },
-                      {
-                        id: '2',
-                        message: ({ previousValue, steps }) =>  { 
-                          getMessage(previousValue)
-                               return Monmessage
-                         },
-                         trigger: '1'
-                      },
-                    
-                      
-                      
-                   
-                     
-                      
-                    ]}
-
 //                     steps={[
 //                       {
 //                         id: '1',
@@ -160,31 +243,3 @@ if(!loading) {
 //                     ]}
                     
 // />
-
-                	/>  
-                
-                                       
-                 </SafeAreaView>
-      </ApplicationProvider>
- )
-    }
-    else{
-      return(
-        <ApplicationProvider {...eva} theme={eva.dark}>
-        <SafeAreaView style={{flex: 2,paddingTop:30}}>
-        <View style={{flex: 1,
-      justifyContent: 'center',
-      alignItems:'center'}}>
-        <Text>Veuillez patienter...</Text>
-          <Spinner size="large"/>
-          </View>
-          </SafeAreaView>
-          </ApplicationProvider>
-      )
-    } 
-      
-        
-    
-}
-
-export default ChatBotScreen
