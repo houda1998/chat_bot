@@ -14,7 +14,6 @@ function ChatBotScreen() {
 const [Mesmessage, setMessage] = useState("");
 const [loading,setloading]=useState(true)
 var msg="";
-var Monmessage="wait";
 useEffect( () =>  {
   axios.get(`https://ai-chatbot-server.herokuapp.com/message`)
   .then(response =>{
@@ -27,19 +26,19 @@ useEffect( () =>  {
   })
 },[Mesmessage]); 
 
-const  ChatbotResponse= async(previewMessage) =>{
- try{
-  const resp= await axios.post(baseURL+'message',{"message":previewMessage})
-     Monmessage=resp.data.message
-     setMessage(Monmessage)
-     setloading(false)
-     return Monmessage
-   }
- catch{err => { 
-   console.log(err)
- }}
-return Monmessage
-}
+// const  ChatbotResponse= async(previewMessage) =>{
+//  try{
+//   const resp= await axios.post(baseURL+'message',{"message":previewMessage})
+//      Monmessage=resp.data.message
+//      setMessage(Monmessage)
+//      setloading(false)
+//      return Monmessage
+//    }
+//  catch{err => { 
+//    console.log(err)
+//  }}
+// return Monmessage
+// }
 
 // const  ChatbotResponse= (previewMessage) =>{
 //    axios.post(baseURL+'message',{"message":previewMessage})
@@ -55,23 +54,23 @@ return Monmessage
 //   })
 
 //  }
-//  const  ChatbotResponse= (previewMessage) =>{
-//   axios.post(baseURL+'message',{"message":previewMessage})
-//  .then(resp =>
-//   {   
-//     setMessage(resp.data.message)
-//     msg=resp.data.message
-//     return resp.data.message;
-//   }
-//    )
-//    .catch(err => { 
-//    return "wait";
-//  })
+ const  ChatbotResponse= (previewMessage) =>{
+  axios.post(baseURL+'message',{"message":previewMessage})
+ .then(resp =>
+  {   
+    setMessage(resp.data.message)
+    msg=resp.data.message
+    return resp.data.message;
+  }
+   )
+   .catch(err => { 
+   return "wait";
+ })
 
-// }
-const getMessage= async (previewMessage)=>{
-   Monmessage= await ChatbotResponse(previewMessage);
 }
+// const getMessage= async (previewMessage)=>{
+//    Monmessage= await ChatbotResponse(previewMessage);
+// }
 if(!loading) {
  return (
 <ApplicationProvider {...eva} theme={eva.light}>
@@ -87,17 +86,40 @@ if(!loading) {
                       {
                         id: '1',
                         user: true,
-                        trigger: "2",                   
+                        trigger: ({ value, steps })=>{
+                          if(ChatbotResponse(value)!=undefined)
+                          return "2"
+                          else {
+                            Monmessage=msg;
+                            if(Monmessage!="" && Monmessage!=undefined)
+                            return "2"
+                            else return "3"
+                          }
+                        },
+                         
                       
                       },
                       {
                         id: '2',
                         message: ({ previousValue, steps }) =>  { 
-                          getMessage(previousValue)
-                               return Monmessage
+                          let Monmessage=ChatbotResponse(previousValue)
+                           console.log(Monmessage)
+                          setloading(false)
+                               return Mesmessage
                          },
                          trigger: '1'
                       },
+                      {
+                        id: '3',
+                        delay:20000,
+                        message: ({ previousValue, steps }) =>  { 
+                              if(ChatbotResponse(previousValue)!=undefined && ChatbotResponse(value)!="")
+                              return ChatbotResponse(value)
+                               else return Mesmessage
+                         },
+                         trigger: '1'
+                      },
+                    
                     
                       
                       

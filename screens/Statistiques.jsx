@@ -8,6 +8,8 @@ import ChatBotScreen from './ChatBotScreen.jsx';
 import NewsScreen from './NewsScreen.jsx';
 import HomeScreen from './HomeScreen.jsx';
 import mapScreen from './mapScreen.jsx';
+import Chat from './ChatBotScreen2.jsx';
+
 function StatistiqueScreen({ navigation }) {
   const [GlobalStat, setGlobalStat] = useState([]);
   useEffect( () =>  {
@@ -105,8 +107,8 @@ function Statistiques() {
           <Drawer.Screen name="Statstiques" component={StatistiqueScreen} />
           <Drawer.Screen name="Chatbot" component={ChatBotScreen} />
           <Drawer.Screen name="news" component={NewsScreen} />
-          <Drawer.Screen name="Se deconnecter" component={HomeScreen} />
           <Drawer.Screen name="Sites consultation médicale" component={mapScreen} />
+          <Drawer.Screen name="Se deconnecter" component={HomeScreen} />
         </Drawer.Navigator>
     )
 }

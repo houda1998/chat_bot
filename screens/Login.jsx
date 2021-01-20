@@ -29,8 +29,8 @@ function LogIn({navigation}) {
         source={require('./assets/Mycovid.png')}
       />
         <Input
-      label="Nom d'utilisateur ou email"
-      placeholder='Pseudo/email'
+      label="  Email"
+      placeholder='Email'
       value={value}
       style={{backgroundColor:"#034C2F",color:"#0DA166"}}
       onChangeText={nextValue => setValue(nextValue)}
@@ -38,7 +38,7 @@ function LogIn({navigation}) {
     <Input
       value={value}
       style={{backgroundColor:"#034C2F"}}
-      label='Mot de passe'
+      label='  Mot de passe'
       placeholder='Mot de passe'
       accessoryRight={renderIcon}
       secureTextEntry={secureTextEntry}

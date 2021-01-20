@@ -36,11 +36,18 @@ function Signup({navigation}) {
            
         <View style={{ backgroundColor: '#353d2f',flex:1, alignItems: 'center', justifyContent: 'center' }}>
         <Input
-      placeholder='Pseudo'
-      label='Pseudo'
+      placeholder='Nom'
+      label='Nom'
       value={value}
       style={{backgroundColor:"#034C2F"}}
 
+      onChangeText={nextValue => setValue(nextValue)}
+    />
+     <Input
+     label='Prenom'
+      placeholder='Prenom'
+      value={value}
+      style={{backgroundColor:"#034C2F"}}
       onChangeText={nextValue => setValue(nextValue)}
     />
      <Input
@@ -50,12 +57,6 @@ function Signup({navigation}) {
       style={{backgroundColor:"#034C2F"}}
       onChangeText={nextValue => setValue(nextValue)}
     />
-     <Datepicker
-    style={{  alignSelf: 'stretch',}}
-    label='Date de naissance'
-    date={date}
-    onSelect={nextDate => setDate(nextDate)}
-      />
     <Input
       value={value}
       label='Mot de passe'
